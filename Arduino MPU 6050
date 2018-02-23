@@ -1,20 +1,20 @@
-#include<Wire.h>   // library used for IIC 
+#include<Wire.h>   // library used for IIC
 long accelX, accelY, accelZ;
 long gForceX, gForceY, gForceZ;
 
 long gyroX, gyroY, gyroZ;
 float rotX, rotY, rotZ;
-
-void setup() 
+//check
+void setup()
 {
   
-  Serial.begin(9600);  
-  Wire.begin();   //initialize II2 
+  Serial.begin(9600);
+  Wire.begin();   //initialize II2
   setupMPU();
 Serial.print("Starting Program");
 }
 
-void loop() 
+void loop()
 {
   //Serial.print("Starting Prgram");
   recordAccelRegisters();
@@ -69,7 +69,7 @@ void recordGyroRegisters()
 {
   //Serial.print("recording Gyro data ");
 Wire.beginTransmission(0x68);
-Wire.write(0x43); //starting register for gyro reading 
+Wire.write(0x43); //starting register for gyro reading
 Wire.endTransmission(false);
 Wire.requestFrom(0x68,6, true);//request Gyro register (43 - 48) Hex address
 //while(Wire.available() < 6);
@@ -77,7 +77,7 @@ gyroX = Wire.read()<<8|Wire.read(); //store first two bytes
 gyroY = Wire.read()<<8|Wire.read(); //store middle two bytes
 gyroZ = Wire.read()<<8|Wire.read(); //store last two bytes
 //Serial.print("Done        ");
-processGyroData(); 
+processGyroData();
 
 }
 
