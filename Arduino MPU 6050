@@ -23,7 +23,7 @@ the software.
 
 #include<Wire.h>   // library used for IIC
 long accelX, accelY, accelZ;
-long gForceX, gForceY, gForceZ;
+float gForceX, gForceY, gForceZ;
 
 long gyroX, gyroY, gyroZ;
 float rotX, rotY, rotZ;
@@ -88,9 +88,9 @@ processAccelData();
 void processAccelData()
 {
   ///Serial.print("Processing Accel Data...      ");
- gForceX= accelX /16384.0;
- gForceY= accelY /16384.0;
- gForceZ= accelZ /16384.0;
+ gForceX= accelX / 16384.0;
+ gForceY= accelY / 16384.0;
+ gForceZ= accelZ / 16384.0;
 //Serial.print("Donzo     ");
 }
 
