@@ -7,11 +7,11 @@ float rotX, rotY, rotZ;
 //check
 void setup()
 {
-  
-  Serial.begin(9600);
-  Wire.begin();   //initialize II2
-  setupMPU();
+  serial.begin(9600);
 Serial.print("Starting Program");
+Wire.begin(); //Initiate the Wire library and join the I2C bus as a
+              //master or slave. This should normally be called only once.
+setupMPU();
 }
 
 void loop()
@@ -23,22 +23,28 @@ void loop()
   delay(100);
 
 }
-
+//This code accesses the slave device location and sets configurations
 void setupMPU()
 {
   //Serial.print("Setup MPU");
-Wire.beginTransmission(0x68); // register signal path reset
-Wire.write(0x6B);  //accessing th register 6b Power MAnagement
-Wire.write(0); //setting sleep Register to 0 (REQUIRED)
-Wire.endTransmission(true);
-Wire.beginTransmission(0x68); //I2C Address of MPU
-Wire.write(0x1B);  //accessing Reg 1B- gyro config
-Wire.write(0); //setting the gyro to full scale 250 deg./s
-Wire.endTransmission(true);
-Wire.beginTransmission(0x68); //I2C Address MPU
-Wire.write(0x1C); // accessing the register 1C -accelerometer config
-Wire.write(0); //Setting the accel to +-2g
+Wire.beginTransmission(0x68); // Begin a transmission to the I2C slave device with the given address.
+                              // Subsequently, queue bytes for transmission with the write()
+                              // function and transmit them by calling endTransmission().
+                              // Parameteraddress: the 7-bit address of the device to transmit to put address of specific device in aargument
+Wire.write(0x6B);             // Accessing register 6B-Power MGT
+Wire.write(0);                // write 0 to set register to 0
 Wire.endTransmission();
+Wire.beginTransmission(68);
+Wire.write(0x1B); //access gyro config register
+Wire.write(0);
+Wire.endTransmission();
+Wire.beginTransmission(0x68);
+Wire.write(0x1C);
+Wire.write(0);                //Write BIT
+Wire.endTransmission();
+
+
+
  // Serial.print("Finished setup.....          ");
 }
 void recordAccelRegisters()
