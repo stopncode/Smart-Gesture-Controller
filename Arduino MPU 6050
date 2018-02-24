@@ -1,3 +1,26 @@
+/*
+===Contact & Support===
+Website: http://eeenthusiast.com/
+Youtube: https://www.youtube.com/EEEnthusiast
+Facebook: https://www.facebook.com/EEEnthusiast/
+Patreon: https://www.patreon.com/EE_Enthusiast
+Revision: 1.0 (July 13th, 2016)
+===Hardware===
+- Arduino Uno R3
+- MPU-6050 (Available from: http://eeenthusiast.com/product/6dof-mpu-6050-accelerometer-gyroscope-temperature/)
+===Software===
+- Latest Software: https://github.com/VRomanov89/EEEnthusiast/tree/master/MPU-6050%20Implementation/MPU6050_Implementation
+- Arduino IDE v1.6.9
+- Arduino Wire library
+===Terms of use===
+The software is provided by EEEnthusiast without warranty of any kind. In no event shall the authors or
+copyright holders be liable for any claim, damages or other liability, whether in an action of contract,
+tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in
+the software.
+*/
+
+\* Minor changes have been made to original source Code */
+
 #include<Wire.h>   // library used for IIC
 long accelX, accelY, accelZ;
 long gForceX, gForceY, gForceZ;
@@ -23,10 +46,10 @@ void loop()
   delay(100);
 
 }
-//This code accesses the slave device location and sets configurations
+//This code accesses the slave device location and sets configurations checc
 void setupMPU()
 {
-  //Serial.print("Setup MPU");
+
 Wire.beginTransmission(0x68); // Begin a transmission to the I2C slave device with the given address.
                               // Subsequently, queue bytes for transmission with the write()
                               // function and transmit them by calling endTransmission().
@@ -42,22 +65,22 @@ Wire.beginTransmission(0x68);
 Wire.write(0x1C);
 Wire.write(0);                //Write BIT
 Wire.endTransmission();
+// Serial.print("Finished setup.....");  //
 
-
-
- // Serial.print("Finished setup.....          ");
 }
+
+
 void recordAccelRegisters()
 {
   //Serial.print("Recording Accelerometer registers...      ");
 Wire.beginTransmission(0x68);
-Wire.write(0x3B); // starting with accel_Xout_H
-Wire.endTransmission(false);
-Wire.requestFrom(0x68,6,true);//reqest Accel register (3B-40) Hex address
-//while(Wire.available() < 6);
-accelX = Wire.read()<<8|Wire.read(); //store first two bytes OR...... SOME VALUE REPRESENTED IN BINARY
-accelY=Wire.read()<<8|Wire.read(); //store middle two bytes
-accelZ=Wire.read()<<8|Wire.read(); //store last two bytes
+Wire.write(0x3B); // starting with accel_Xout_H Register High BIT
+Wire.endTransmission();
+Wire.requestFrom(0x68,6);//reqest Accel register (3B-40) Hex address
+while(Wire.available() < 6);   //
+accelX = Wire.read()<<8|Wire.read(); //store first two bytes OR. shifts 2, 8 bits into 16 bit variable
+accelY = Wire.read()<<8|Wire.read(); //store middle two bytes
+accelZ = Wire.read()<<8|Wire.read(); //store last two bytes
 processAccelData();
 //Serial.print("Finished...     ");
 }
@@ -77,8 +100,8 @@ void recordGyroRegisters()
 Wire.beginTransmission(0x68);
 Wire.write(0x43); //starting register for gyro reading
 Wire.endTransmission(false);
-Wire.requestFrom(0x68,6, true);//request Gyro register (43 - 48) Hex address
-//while(Wire.available() < 6);
+Wire.requestFrom(0x68,6);//request Gyro register (43 - 48) Hex address
+while(Wire.available() < 6);  // returns the number of bytes available with read
 gyroX = Wire.read()<<8|Wire.read(); //store first two bytes
 gyroY = Wire.read()<<8|Wire.read(); //store middle two bytes
 gyroZ = Wire.read()<<8|Wire.read(); //store last two bytes
