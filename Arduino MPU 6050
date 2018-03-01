@@ -30,7 +30,7 @@ float rotX, rotY, rotZ;
 //check
 void setup()
 {
-  serial.begin(9600); // Initiate serial communication with a Baud rate to 9600
+  Serial.begin(9600); // Initiate serial communication with a Baud rate to 9600
 Serial.print("Starting Program....."); //
 Wire.begin(); //Initiate the Wire library and join the I2C bus as a
               //master or slave. This should normally be called only once.
@@ -54,7 +54,7 @@ void setupMPU()
 Wire.beginTransmission(0x68); // start bit, address of slave device, start talking to device
                               // Parameter address: the 7-bit address of the device to transmit to
 Wire.write(6B);               // PWr MGMT (the function sets write bit and address of register)
-Wire.Write(1);                // reset to deafult values; Bit 1
+Wire.Write(1);                // reset to default values; Bit 1
 Wire.endTransmission();
 Serial.print("Finished setup.....");  //
 
