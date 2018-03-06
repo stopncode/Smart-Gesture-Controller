@@ -36,7 +36,7 @@ void setupMPU()
 Wire.beginTransmission(0x68);   // Call device with address
                                 // Parameter address: the 7-bit address of the device to transmit to
 Wire.write(6B);                 //Set pointer to address Pwr MGMT (the function sets write bit and address of register)
-Wire.Write(0x00);                  // reset to default values; Bit 0
+Wire.Write(0x00);                  // Wake MPU6050; Bit 0
 Wire.endTransmission()
 Wire.beginTransmission(0x68);   // start bit, address of slave device, start talking to device
                                 // Parameter address: the 7-bit address of the device to transmit to
